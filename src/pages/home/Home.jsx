@@ -9,6 +9,7 @@ import Blogs from '../blog/Blogs'
 import TeamSection from './TeamSection'
 import Pricing from './Pricing'
 import FQAs from './FQAs'
+import Newsletter from './Newsletter'
 
 const Home = () => {
   return (
@@ -22,6 +23,7 @@ const Home = () => {
      <TeamSection/>
      <Pricing/>
      <FQAs/>
+     <Newsletter/>
     </>
   )
 }
