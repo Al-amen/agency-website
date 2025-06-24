@@ -4,6 +4,7 @@ import ToolsSection from './ToolsSection'
 import CompanyLogo from './CompanyLogo'
 
 import Service from './Service'
+import Testimonials from './Testimonials'
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
      <ToolsSection/>
      <CompanyLogo/>
      <Service/>
+     <Testimonials/>
     </>
   )
 }
