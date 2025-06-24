@@ -5,6 +5,7 @@ import CompanyLogo from './CompanyLogo'
 
 import Service from './Service'
 import Testimonials from './Testimonials'
+import Blogs from '../blog/Blogs'
 
 const Home = () => {
   return (
@@ -14,6 +15,7 @@ const Home = () => {
      <CompanyLogo/>
      <Service/>
      <Testimonials/>
+     <Blogs/>
     </>
   )
 }
