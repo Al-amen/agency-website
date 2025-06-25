@@ -2,9 +2,9 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <footer className="bg-base-200 text-base-content pt-10 pb-4 px-4 md:px-16">
+    <footer className="bg-gray-300 max-w-screen-2xl container  mx-auto py-20  text-base-content pt-10 pb-4 px-4 md:px-16">
       {/* Top section: Links and Newsletter */}
-      <div className="flex flex-col items-center text-center lg:flex-row lg:justify-between lg:items-start lg:text-left gap-10 pb-8 border-b border-base-300 w-full">
+      <div className=" flex flex-col items-center text-center lg:flex-row lg:justify-between lg:items-start lg:text-left gap-10 pb-8 border-b border-base-300 w-full">
         <div className="flex flex-col items-center text-center sm:flex-row sm:items-start sm:text-left flex-wrap gap-8 w-full lg:w-auto">
           <nav className="min-w-[140px]">
             <h6 className="footer-title mb-2 text-lg font-semibold">

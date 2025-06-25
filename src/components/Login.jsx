@@ -6,93 +6,101 @@ import { Link, useNavigate } from "react-router";
 import { useAuth } from "../context/AuthContext";
 import Swal from "sweetalert2";
 
-
 import {
   FacebookAuthProvider,
   fetchSignInMethodsForEmail,
   linkWithCredential,
-  getAuth
+  getAuth,
 } from "firebase/auth";
 import app from "../firebase/firebase.config";
 
-
 const auth = getAuth(app);
 
-
 const Login = () => {
-    const { register, handleSubmit, formState: { errors }, } = useForm()
-    const [error, setError] = useState("")
-    const {loginWithEmail,googleLogin,facebookLogin} = useAuth()
-    const navigate = useNavigate()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const [error, setError] = useState("");
+  const { loginWithEmail, googleLogin, facebookLogin,githubLogin } = useAuth();
+  const navigate = useNavigate();
 
-    const onSubmit = async (data) => {
-        try {
-            await loginWithEmail(data.email,data.password)
-            Swal.fire({
-                title: "Login successful",
-                icon: "success",
-                draggable: true,
-              });
-              setError("")
-              navigate("/")
-        } catch (error) {
-            console.error("Failed to login", error)
-            setError("Failed to login. Please provide correct email and password..")
-        }
+  const onSubmit = async (data) => {
+    try {
+      await loginWithEmail(data.email, data.password);
+      Swal.fire({
+        title: "Login successful",
+        icon: "success",
+        draggable: true,
+      });
+      setError("");
+      navigate("/");
+    } catch (error) {
+      console.error("Failed to login", error);
+      setError("Failed to login. Please provide correct email and password..");
     }
+  };
 
-     const handleGoogleLogin = async () => {
-        try {
-            await googleLogin();
-            navigate("/")
-        }
-        catch(error) {
-            console.error("Faild to Login", error)
-        }
+  const handleGoogleLogin = async () => {
+    try {
+      await googleLogin();
+      navigate("/");
+    } catch (error) {
+      console.error("Faild to Login", error);
     }
+  };
 
-    const handleFacebookLogin = async () => {
-        try {
-          await facebookLogin();
-          navigate("/");
-        } catch (error) {
-          if (error.code === "auth/account-exists-with-different-credential") {
-            const pendingCred = FacebookAuthProvider.credentialFromError(error);
-            const email = error.customData?.email;
-    
-            const providers = await fetchSignInMethodsForEmail(auth, email);
-    
-            if (providers.includes("google.com")) {
-              Swal.fire({
-                icon: "info",
-                title: "Account already exists with Google",
-                text: "Please login with Google to link your Facebook account.",
-              });
-    
-              // Optional: let user log in with Google and then link Facebook manually
-              try {
-                const googleResult = await googleLogin();
-                await linkWithCredential(googleResult.user, pendingCred);
-                navigate("/");
-              } catch (linkError) {
-                console.error(
-                  "Failed to link Facebook with Google account",
-                  linkError
-                );
-              }
-            } else {
-              Swal.fire({
-                icon: "error",
-                title: "Account exists",
-                text: "Please sign in using your original method.",
-              });
-            }
-          } else {
-            console.error("Failed to login with Facebook", error);
+  const handleFacebookLogin = async () => {
+    try {
+      await facebookLogin();
+      navigate("/");
+    } catch (error) {
+      if (error.code === "auth/account-exists-with-different-credential") {
+        const pendingCred = FacebookAuthProvider.credentialFromError(error);
+        const email = error.customData?.email;
+
+        const providers = await fetchSignInMethodsForEmail(auth, email);
+
+        if (providers.includes("google.com")) {
+          Swal.fire({
+            icon: "info",
+            title: "Account already exists with Google",
+            text: "Please login with Google to link your Facebook account.",
+          });
+
+          // Optional: let user log in with Google and then link Facebook manually
+          try {
+            const googleResult = await googleLogin();
+            await linkWithCredential(googleResult.user, pendingCred);
+            navigate("/");
+          } catch (linkError) {
+            console.error(
+              "Failed to link Facebook with Google account",
+              linkError
+            );
           }
+        } else {
+          Swal.fire({
+            icon: "error",
+            title: "Account exists",
+            text: "Please sign in using your original method.",
+          });
         }
-      };
+      } else {
+        console.error("Failed to login with Facebook", error);
+      }
+    }
+  };
 
+  const handlegithubLoginLogin = async () => {
+    try {
+      await githubLogin();
+      navigate("/");
+    } catch (error) {
+      console.error("Faild to Login", error);
+    }
+  };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100 p-4">
@@ -163,18 +171,21 @@ const Login = () => {
 
           <div className="flex flex-col sm:flex-row  justify-center  gap-4">
             <button
-              onClick={handleGoogleLogin} 
+              onClick={handleGoogleLogin}
               className="flex w-full  items-center px-4 py-2 space-x-2 text-white bg-red-500 rounded hover:bg-red-600"
             >
               <FaGoogle />
               <span>Google</span>
             </button>
-            <button className="flex w-full items-center px-4 py-2 space-x-2 text-white bg-gray-800 rounded hover:bg-gray-900">
+            <button
+              onClick={handlegithubLoginLogin}
+              className="flex w-full items-center px-4 py-2 space-x-2 text-white bg-gray-800 rounded hover:bg-gray-900"
+            >
               <FaGithub />
               <span>GitHub</span>
             </button>
             <button
-             onClick={handleFacebookLogin}
+              onClick={handleFacebookLogin}
               className="flex w-full
               
                          items-center px-4 py-2 space-x-2 text-white bg-blue-500 rounded hover:bg-blue-600"

@@ -182,7 +182,7 @@ const Register = () => {
               <span>Google</span>
             </button>
             <button
-              
+              onClick={handlegithubLoginLogin}
               className="flex w-full items-center px-4 py-2 space-x-2 text-white bg-gray-800 rounded hover:bg-gray-900"
             >
               <FaGithub />
