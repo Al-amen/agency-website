@@ -65,7 +65,7 @@ const Pricing = () => {
               type="checkbox"
               className="sr-only"
               checked={isYearly}
-              onClick={() => setIsYearly(!isYearly)}
+              onChange={() => setIsYearly(!isYearly)} // ✅ Use onChange for controlled input
             />
             <div className="toggle-bg w-14 h-8 bg-gray-300 rounded-full"></div>
             <div

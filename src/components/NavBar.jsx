@@ -1,7 +1,14 @@
 import React from "react";
 import { Link } from "react-router";
+import { useAuth } from "../context/AuthContext";
 
 const NavBar = () => {
+  const { user,logout } = useAuth();
+  console.log(user);
+  const handleLogOut = () => {
+    logout();
+    
+  }
   return (
     <div className="navbar max-w-screen-2xl container mx-auto bg-white px-5 ">
       <div className="navbar-start">
@@ -34,12 +41,12 @@ const NavBar = () => {
               <Link to="/service">Services</Link>
             </li>
             <li>
-              <Link to="/">Blog</Link>
+              <Link to="/blogs">Blogs</Link>
             </li>
             <li>
               <details>
                 <summary>Categories</summary>
-                <ul className="p-2">
+                <ul className="p-2 z-50">
                   <li>
                     <Link to="/">Web design</Link>
                   </li>
@@ -58,7 +65,7 @@ const NavBar = () => {
           </ul>
         </div>
         <Link to="/" className=" font-bold text-xl flex items-center">
-          <img src="/logo.png" alt="logo"  />
+          <img src="/logo.png" alt="logo" />
           <span className="ml-2 text-[#697077] hidden sm:block">WebCode</span>
         </Link>
       </div>
@@ -71,12 +78,12 @@ const NavBar = () => {
             <Link to="/service">Services</Link>
           </li>
           <li>
-            <Link  to="/">Blog</Link>
+            <Link to="/blogs">Blogs</Link>
           </li>
           <li>
             <details>
               <summary>Categories</summary>
-              <ul className="p-2">
+              <ul className="p-2 z-50">
                 <li>
                   <Link to="/">Web design</Link>
                 </li>
@@ -87,7 +94,7 @@ const NavBar = () => {
                   <Link to="/">Data Science</Link>
                 </li>
                 <li>
-                  <Link  to="/">Machine Learing</Link>
+                  <Link to="/">Machine Learing</Link>
                 </li>
               </ul>
             </details>
@@ -95,9 +102,37 @@ const NavBar = () => {
         </ul>
       </div>
       <div className="navbar-end space-x-4">
-       <Link to='/login' className="btn btn-outline btn-primary rounded-2xl px-8 hidden  sm:flex">Log In</Link> 
-       <Link to="/pricing" className="btn  btn-primary bg-primary rounded-2xl  text-white">Start Free Trial</Link>
-       
+        {user ? (
+          <>
+            <Link
+              to="/dashboard"
+              className="btn btn-outline btn-primary px-8 hidden sm:flex"
+            >
+              Dashboard
+            </Link>
+            <button
+              onClick={handleLogOut}
+              className="btn  btn-primary bg-primary text-white"
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link
+              to="/login"
+              className="btn btn-outline btn-primary px-8 hidden sm:flex"
+            >
+              Log In
+            </Link>
+            <Link
+              to="/pricing"
+              className="btn  btn-primary bg-primary text-white"
+            >
+              Start Free Trial
+            </Link>
+          </>
+        )}
       </div>
     </div>
   );
